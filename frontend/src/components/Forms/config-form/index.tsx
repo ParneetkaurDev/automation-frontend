@@ -66,6 +66,7 @@ import type { IFormContractContext } from "@components/Forms/utils/resolve-form-
 import FIS12PersonalLoanSelectForm from "@components/Forms/custom-forms/fis12-personal-loan-select-form";
 import TRV11200MetroSelectForm from "../custom-forms/trv11-200-select-form";
 import TRV14SearchIncrementalPullForm from "../custom-forms/trv14-search-incremental-pull-form";
+import TRV14SelectForm from "../custom-forms/trv14-select-form";
 
 export type { FormConfigType, FormFieldConfigType } from "@components/Forms/config-form/types";
 
@@ -289,6 +290,10 @@ export const FormConfig = ({
         return <TRVSelectForm submitEvent={submitEvent} flowId={flowId} />;
     }
 
+    if (formConfig.find((field) => field.type === "trv14_select")) {
+        return <TRV14SelectForm submitEvent={submitEvent} flowId={flowId} />;
+    }
+
     if (formConfig.find((field) => field.type === "trv11_select")) {
         return <TRV11SelectForm submitEvent={submitEvent} />;
     }
@@ -440,6 +445,12 @@ export const FormConfig = ({
                 schema={schema}
                 onSubmit={onSubmitSchema}
                 mapEnabled={isRideMapEnabled(sessionData?.domain, sessionData?.version)}
+                tokenContext={{
+                    npType: sessionData?.npType,
+                    subscriberUrl: sessionData?.subscriberUrl,
+                    domain: sessionData?.domain,
+                    version: sessionData?.version,
+                }}
             />
         );
     }
